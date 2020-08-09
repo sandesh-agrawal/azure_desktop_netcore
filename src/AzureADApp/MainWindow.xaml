@@ -1,0 +1,54 @@
+﻿<Window x:Class="AzureADApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AzureADApp"
+        mc:Ignorable="d"
+        Title="AzureADApp" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowsViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <DockPanel LastChildFill="False" Margin="5px">
+                <CheckBox IsChecked="{Binding UseDeviceCode, Mode=OneWayToSource}" DockPanel.Dock="Right"
+                          VerticalAlignment="Center"
+                      IsEnabled="{Binding ElementName=LoginButton, Path=IsEnabled}">Use Device Code to login</CheckBox>
+                <Button Height="25px" 
+                        DockPanel.Dock="Right" Width="100px" 
+                        Margin="5px"
+                        IsEnabled="{Binding LogoutEnabled}"
+                        Command="{Binding LogoutCommand}"
+                        >Logout</Button>
+                <Button x:Name="LoginButton" Height="25px" 
+                        DockPanel.Dock="Right" 
+                        Width="100px" Margin="5px"
+                        IsEnabled="{Binding LoginEnabled}"
+                        Command="{Binding LoginCommand}">Login</Button>
+            </DockPanel>
+            <DockPanel x:Name="InputPanel" Margin="5px" LastChildFill="False">
+                <DockPanel DockPanel.Dock="Left">
+                    <DockPanel DockPanel.Dock="Left">
+                        <Label Content="Tenant ID" DockPanel.Dock="Left" Padding="5px" MinWidth="100px"></Label>
+                        <TextBox MinWidth="250px" Padding="5px"
+                             Text="{Binding TenantId, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Right">
+                    <DockPanel DockPanel.Dock="Right">
+                        <Label Content="User Name" DockPanel.Dock="Left" Padding="5px" MinWidth="100px"></Label>
+                        <TextBox MinWidth="250px" DockPanel.Dock="Right" Padding="5px"
+                                 InputScope="EmailSmtpAddress"
+                             Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </DockPanel>
+
+                </DockPanel>
+            </DockPanel>
+        </StackPanel>
+        <TextBlock Margin="5px"
+                   Padding="5px"
+            Text="{Binding Response, Mode=OneWay}" TextWrapping="WrapWithOverflow"></TextBlock>
+
+    </DockPanel>
+</Window>
